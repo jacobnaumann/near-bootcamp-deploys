@@ -1,5 +1,7 @@
 # `near-sdk-as` Starter Kit
 
+Testing pushing to git
+
 This is a good project to use as a starting point for your AssemblyScript project.
 
 ## Samples
