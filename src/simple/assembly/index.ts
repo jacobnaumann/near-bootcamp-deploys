@@ -1,4 +1,4 @@
-import { storage, Context, math } from "near-sdk-as"
+import { storage, Context, math, u128 } from "near-sdk-as"
 
 // return the string 'hello world'
 export function helloWorld(): string {
@@ -25,13 +25,21 @@ function storageReport(): string {
   return `storage [ ${Context.storageUsage} bytes ]`
 }
 
-function randomNum(): u32 {
-  let buf = math.randomBuffer(4);
-  return (
-    (((0xff & buf[0]) << 24) |
-      ((0xff & buf[1]) << 16) |
-      ((0xff & buf[2]) << 8) |
-      ((0xff & buf[3]) << 0)) %
-    100
-  );
+// function randomNum(): u32 {
+//   let buf = math.randomBuffer(4);
+//   return (
+//     (((0xff & buf[0]) << 24) |
+//       ((0xff & buf[1]) << 16) |
+//       ((0xff & buf[2]) << 8) |
+//       ((0xff & buf[3]) << 0)) %
+//     100
+//   );
+// }
+
+export function get_block(): string {
+  return `The current block is ${Context.blockIndex}.`
+}
+
+export function get_balance(): string {
+  return `The balance of ${Context.accountBalance}.`
 }

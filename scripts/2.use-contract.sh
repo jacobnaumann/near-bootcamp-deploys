@@ -28,6 +28,16 @@ echo
 
 near view $CONTRACT read '{"key":"some-key"}'
 
+echo 
+echo 
+
+near view $CONTRACT get_block
+
+echo 
+echo
+
+near view $CONTRACT get_balance
+
 echo
 echo
 echo ---------------------------------------------------------
