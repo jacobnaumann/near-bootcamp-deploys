@@ -1,4 +1,4 @@
-import { storage, Context } from "near-sdk-as"
+import { storage, Context, math } from "near-sdk-as"
 
 // return the string 'hello world'
 export function helloWorld(): string {
@@ -23,4 +23,15 @@ export function write(key: string, value: string): string {
 // private helper method used by read() and write() above
 function storageReport(): string {
   return `storage [ ${Context.storageUsage} bytes ]`
+}
+
+function randomNum(): u32 {
+  let buf = math.randomBuffer(4);
+  return (
+    (((0xff & buf[0]) << 24) |
+      ((0xff & buf[1]) << 16) |
+      ((0xff & buf[2]) << 8) |
+      ((0xff & buf[3]) << 0)) %
+    100
+  );
 }
