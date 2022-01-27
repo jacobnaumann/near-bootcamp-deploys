@@ -42,6 +42,7 @@ export function get_block(): u64 {
   return Context.blockIndex
 }
 
+
 export function get_balance(): u128 {
   return Context.accountBalance
 }
