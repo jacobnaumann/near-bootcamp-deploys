@@ -1,4 +1,6 @@
-import { storage, Context, math, u128 } from "near-sdk-as"
+import { storage, Context, logging, PersistentMap, u128 } from "near-sdk-as"
+
+const balances = new PersistentMap<string, u64>("b:");
 
 // return the string 'hello world'
 export function helloWorld(): string {
@@ -36,10 +38,24 @@ function storageReport(): string {
 //   );
 // }
 
-export function get_block(): string {
-  return `The current block is ${Context.blockIndex}.`
+export function get_block(): u64 {
+  return Context.blockIndex
 }
 
-export function get_balance(): string {
-  return `The balance of ${Context.accountBalance}.`
+export function get_balance(): u128 {
+  return Context.accountBalance
+}
+
+export function transfer(to: string, tokens: u64): boolean {
+  logging.log("transfer from: " + Context.sender + " to: " + to + " tokens: " + tokens.toString());
+  const fromAmount = getBalance(Context.sender);
+  assert(fromAmount >= tokens, "not enough tokens on account");
+  assert(getBalance(to) <= getBalance(to) + tokens,"overflow at the receiver side");
+  balances.set(Context.sender, fromAmount - tokens);
+  balances.set(to, getBalance(to) + tokens);
+  return true;
+}
+
+function getBalance(owner: string): u64 {
+  return balances.contains(owner) ? balances.getSome(owner) : 0;
 }
