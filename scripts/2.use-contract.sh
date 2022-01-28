@@ -38,6 +38,16 @@ echo
 
 near view $CONTRACT get_balance
 
+echo 
+echo 
+
+near view $CONTRACT get_blockTimeStamp
+
+echo 
+echo 
+
+near view $CONTRACT hasKey '{"key":"some-key"}'
+
 echo
 echo
 echo ---------------------------------------------------------
@@ -49,6 +59,11 @@ echo
 # --> FunctionCallError(HostError(ProhibitedInView { method_name: "storage_write" }))
 # near view $CONTRACT write '{"key": "some-key", "value":"some value"}'
 near call $CONTRACT write '{"key": "some-key", "value":"some value"}' --accountId $CONTRACT
+
+echo
+echo 
+
+# near call $CONTRACT transfer '{"to": "sherif.testnet", "tokens": "2"}' --accountId $CONTRACT
 
 echo
 echo "now run this script again to see changes made by this file"

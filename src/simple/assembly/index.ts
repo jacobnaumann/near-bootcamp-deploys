@@ -1,4 +1,4 @@
-import { storage, Context, logging, PersistentMap, u128 } from "near-sdk-as"
+import { storage, Context, logging, PersistentMap, u128, math } from "near-sdk-as"
 
 const balances = new PersistentMap<string, u64>("b:");
 
@@ -42,9 +42,27 @@ export function get_block(): u64 {
   return Context.blockIndex
 }
 
+export function get_blockTimeStamp(): u64 {
+  return Context.blockTimestamp
+}
 
 export function get_balance(): u128 {
   return Context.accountBalance
+}
+
+export function hasKey(key: string): bool {
+  return storage.contains(key)
+}
+
+export function randomNum(): u32 {
+  let buf = math.randomBuffer(4);
+  return (
+    (((0xff & buf[0]) << 24) |
+      ((0xff & buf[1]) << 16) |
+      ((0xff & buf[2]) << 8) |
+      ((0xff & buf[3]) << 0)) %
+    100
+  );
 }
 
 export function transfer(to: string, tokens: u64): boolean {
